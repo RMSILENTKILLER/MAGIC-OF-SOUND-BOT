@@ -1,0 +1,33 @@
+{
+  "name": "༊✨𝐌𝐀𝐆𝐈𝐂🔹𝐎𝐅🔸𝐒𝐎𝐔𝐍𝐃✨᯾",
+  "version": "1.0.0",
+  "description": "A Facebook Messenger bot by Rasel Mahmud for digital interaction and automation.",
+  "author": "Rasel Mahmud",
+  "license": "MIT",
+  "accounts": [
+    {
+      "facebook_id": "raselmahmud.q",
+      "uid": "61571550050635"
+    },
+    {
+      "facebook_id": "iiii.482394",
+      "uid": "100024220812646"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RMSILENTKILLER/MAGIC-OF-SOUND-BOT.git"
+  },
+  "homepage": "https://www.facebook.com/raselmahmud.q",
+  "bugs": {
+    "url": "https://github.com/RMSILENTKILLER/MAGIC-OF-SOUND-BOT/issues"
+  },
+  "keywords": ["facebook", "messenger", "bot", "automation", "MAGIC-OF-SOUND"],
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.4"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
