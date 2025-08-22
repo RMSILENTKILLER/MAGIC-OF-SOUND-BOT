@@ -1,79 +1,83 @@
-/**
- * MAGIC OF SOUND BOT
- * Author: Rasel Mahmud
- * GitHub: https://github.com/RMSILENTKILLER/MAGIC-OF-SOUND-BOT
- */
+// index.js - Entry point for ༊✨MAGIC🔹OF🔸SOUND✨᯾ Bot
 
-const fs = require("fs");
-const fse = require("fs-extra");
-const axios = require("axios");
-const sqlite3 = require("sqlite3").verbose();
+const { spawn } = require("child_process");
+const express = require("express");
 const path = require("path");
+const logger = require("./utils/log");
+const axios = require("axios");
+const fs = require("fs");
 
-// Load config
-const config = require("./config.json");
+///////////////////////////////////////////////////////////
+//========= Web dashboard / uptime server =========//
+///////////////////////////////////////////////////////////
 
-// Initialize database
-const db = new sqlite3.Database(config.DATABASE.sqlite.storage, (err) => {
-  if (err) console.error("DB Error:", err);
-  else console.log("Database loaded successfully.");
+const app = express();
+const port = process.env.PORT || 8080;
+
+// Serve a simple HTML dashboard
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Log bot start
-console.log(`\n[✔️] ${config.BOTNAME} is starting...`);
-console.log(`[✔️] Prefix: ${config.PREFIX}`);
-console.log(`[✔️] Admins: ${config.ADMINBOT.join(", ")}`);
-console.log("[✔️] Listening to events...\n");
-
-// Appstate file check
-const appstatePath = path.resolve(__dirname, config.APPSTATEPATH);
-if (!fs.existsSync(appstatePath)) {
-  fs.writeFileSync(appstatePath, JSON.stringify({}));
-  console.log("[✔️] appstate.json created.");
-}
-
-// Simple message send function (simulation)
-function sendMessage(userId, message) {
-  console.log(`[Message to ${userId}]: ${message}`);
-}
-
-// Example: send bot started message to all admins
-config.ADMINBOT.forEach(adminId => {
-  sendMessage(adminId, `${config.BOTNAME} is now running!`);
+app.listen(port, () => {
+    logger(`Server running on port ${port}`, "[Starting]");
+}).on('error', (err) => {
+    if (err.code === 'EACCES') {
+        logger(`Permission denied for port ${port}`, "[Error]");
+    } else {
+        logger(`Server error: ${err.message}`, "[Error]");
+    }
 });
 
-// Load commands
-const commandsDir = path.resolve(__dirname, "commands");
-if (!fs.existsSync(commandsDir)) {
-  fs.mkdirSync(commandsDir);
-  console.log("[✔️] commands folder created.");
+///////////////////////////////////////////////////////////
+//========= Start bot and auto-restart loop =========//
+///////////////////////////////////////////////////////////
+
+global.restartCount = global.restartCount || 0;
+
+function startBot(message) {
+    if (message) logger(message, "[Starting]");
+
+    const child = spawn("node", ["--trace-warnings", "--async-stack-traces", "magic.js"], {
+        cwd: __dirname,
+        stdio: "inherit",
+        shell: true
+    });
+
+    child.on("close", (code) => {
+        if (code !== 0 && global.restartCount < 5) {
+            global.restartCount += 1;
+            logger(`Bot exited with code ${code}. Restarting (${global.restartCount}/5)...`, "[Restarting]");
+            startBot();
+        } else {
+            logger(`Bot stopped after ${global.restartCount} restarts.`, "[Stopped]");
+        }
+    });
+
+    child.on("error", (err) => {
+        logger(`Error occurred: ${JSON.stringify(err)}`, "[Error]");
+    });
 }
 
-// Example command handler
-function handleCommand(userId, command, args) {
-  switch (command.toLowerCase()) {
-    case "ping":
-      sendMessage(userId, "Pong! 🏓");
-      break;
-    case "say":
-      sendMessage(userId, args.join(" "));
-      break;
-    default:
-      sendMessage(userId, `Unknown command: ${command}`);
-  }
-}
+///////////////////////////////////////////////////////////
+//========= Check updates from GitHub =========//
+///////////////////////////////////////////////////////////
 
-// Event listener simulation (incoming messages)
-function onMessage(userId, message) {
-  if (!message.startsWith(config.PREFIX)) return;
-  const args = message.slice(config.PREFIX.length).trim().split(/ +/g);
-  const command = args.shift();
-  handleCommand(userId, command, args);
-}
+const updateURL = "https://raw.githubusercontent.com/RMSILENTKILLER/MAGIC-OF-SOUND-BOT/main/data.json";
 
-// Demo incoming messages
-setTimeout(() => onMessage(config.ADMINBOT[0], "*ping"), 2000);
-setTimeout(() => onMessage(config.ADMINBOT[0], "*say Hello World!"), 4000);
+axios.get(updateURL)
+    .then((res) => {
+        const data = res.data;
+        logger(`Bot Name: ${data.name}`, "[NAME]");
+        logger(`Version: ${data.version}`, "[VERSION]");
+        logger(`Description: ${data.description}`, "[DESCRIPTION]");
+    })
+    .catch((err) => {
+        logger(`Failed to fetch update info: ${err.message}`, "[Update Error]");
+    });
 
-// Keep process alive
-process.stdin.resume();
+///////////////////////////////////////////////////////////
+//========= Launch the bot =========//
+///////////////////////////////////////////////////////////
+
+startBot("Launching ༊✨MAGIC🔹OF🔸SOUND✨᯾ Bot...");
