@@ -1,5 +1,3 @@
-// magic.js
-
 const { spawn } = require("child_process");
 const axios = require("axios");
 const logger = require("./utils/log");
@@ -34,12 +32,13 @@ app.listen(port, () => {
 //========= Create start bot and make it loop =========//
 /////////////////////////////////////////////////////////
 
+// Initialize global restart counter
 global.countRestart = global.countRestart || 0;
 
 function startBot(message) {
     if (message) logger(message, "[ Starting ]");
 
-    const child = spawn("node", ["--trace-warnings", "--async-stack-traces", "MAGIC.js"], {
+    const child = spawn("node", ["--trace-warnings", "--async-stack-traces", "Cyber.js"], {
         cwd: __dirname,
         stdio: "inherit",
         shell: true
@@ -64,7 +63,7 @@ function startBot(message) {
 //========= Check update from Github =========//
 ////////////////////////////////////////////////
 
-axios.get("https://raw.githubusercontent.com/RMSILENTKILLER/MAGIC-OF-SOUND-BOT/main/data.json")
+axios.get("https://raw.githubusercontent.com/cyber-ullash/cyber-bot/main/data.json")
     .then((res) => {
         logger(res.data.name, "[ NAME ]");
         logger(`Version: ${res.data.version}`, "[ VERSION ]");
