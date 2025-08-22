@@ -1,4 +1,5 @@
 # MAGIC-OF-SOUND-BOT
+[![Bot Status](https://img.shields.io/badge/status-online-brightgreen)]()
 # ༊✨𝐌𝐀𝐆𝐈𝐂𝐎𝐅𝐒𝐎𝐔𝐍𝐃✨᯾
 
 <p align="center">
