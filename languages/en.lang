@@ -1,68 +1,42 @@
-// magic.js - Messages & Language for ༊✨MAGIC🔹OF🔸SOUND✨᯾
+// languages/en.lang.js
 
-Magic.newVersionDetected = "You are running version %1. The latest version is %2.";
-Magic.errorFormat = "Module format is invalid!";
-Magic.nameExist = "Module name conflicts with an existing module!";
-Magic.notFoundLanguage = "Module %1 does not support your selected language.";
-Magic.notFoundPackage = "Cannot find package %1 for module %2. Attempting to install...";
-Magic.cantInstallPackage = "Failed to install package %1 for module %2, error: %3";
-Magic.loadedPackage = "Package %1 installed successfully for module %2";
-Magic.loadedConfig = "Configuration for module %1 loaded successfully";
-Magic.cantLoadConfig = "Cannot load config for module %1, error: %2";
-Magic.cantOnload = "Setup for module %1 failed, error: %2";
-Magic.successLoadModule = "Module %1 installed successfully";
-Magic.failLoadModule = "Failed to install module %1, error: %2";
-Magic.finishLoadModule = "Loaded %1 module commands and %2 module events successfully";
-Magic.foundPathAppstate = "Appstate file located successfully.";
-Magic.notFoundPathAppstate = "Error: Appstate file missing or corrupted!";
-Magic.checkListGban = "Checking global ban list...";
-Magic.banDevice = "Your device has been banned from using ༊✨MAGIC🔹OF🔸SOUND✨᯾. Contact Rasel Mahmud for support.";
-Magic.keyNotSameFormat = "Invalid code format. Code must contain 6 digits.";
-Magic.codeInputExpired = "The entered code is incorrect or expired.";
-Magic.unbanDeviceSuccess = "Device unbanned successfully. Restart the bot to continue.";
-Magic.userBanned = "User %1 has been banned for reason: %2. Contact Rasel Mahmud for assistance.";
-Magic.finishCheckListGban = "Global ban list check completed successfully.";
-Magic.handleListenError = "Unexpected listener error: %1";
-Magic.warningSourceCode = "SOURCE CODE MODIFIED! BOT HAS STOPPED!";
-Magic.refreshListen = "Listener refreshed successfully.";
-Magic.successConnectDatabase = "Database connection established successfully!";
-Magic.failConnectDatabase = "Failed to connect to database, error: %1";
+module.exports = {
+    bot: {
+        name: "༊✨MAGIC🔹OF🔸SOUND✨᯾",
+        version: "10.1.1",
+        author: "Rasel Mahmud",
+        startMessage: "🚀 Bot has started successfully!",
+        stopMessage: "🛑 Bot has stopped.",
+        restartMessage: "🔄 Bot is restarting..."
+    },
 
-// Command/Thread/Permissions messages
-Magic.handleCommand = {};
-Magic.handleCommand.userBanned = "You are banned from using commands on this bot!";
-Magic.handleCommand.threadBanned = "This group/thread is banned from using commands. Contact Rasel Mahmud for unban.";
-Magic.handleCommand.commandNotExist = "The command \"%1\" does not exist. Check your input!";
-Magic.handleCommand.commandThreadBanned = "Cannot execute \"%1\" in this thread.";
-Magic.handleCommand.commandUserBanned = "You cannot execute \"%1\" at this time.";
-Magic.handleCommand.threadNotAllowNSFW = "This command is restricted to administrators only.";
-Magic.handleCommand.permssionNotEnough = "You do not have permission to execute this command. Only Rasel Mahmud can use it.";
-Magic.handleCommand.cantSetMessageReaction = "Error while setting message reaction: %1";
-Magic.handleCommand.executeCommand = "[ %1 ] Command executed: %2 by user %3 at thread %4 | Args: %5 | Processing: %6ms";
-Magic.handleCommand.commandError = "Error executing command %1: %2";
+    errors: {
+        moduleNotFound: "❌ Module %1 not found.",
+        commandNotExist: "⚠️ The command you used is not valid here. Could it be %1?",
+        userBanned: "⛔ You are banned from using this bot.",
+        threadBanned: "🚫 This group is banned from using the bot.",
+        permissionNotEnough: "🔒 Only Rasel Mahmud (bot owner) can use this command."
+    },
 
-// Reply/Reaction/Events
-Magic.handleReply = {};
-Magic.handleReply.missingValue = "Missing value to respond.";
-Magic.handleReply.executeError = "Error responding to your input: %1";
+    utils: {
+        throwError: "⚠️ An unexpected error occurred while using %1. Please try again."
+    },
 
-Magic.handleReaction = {};
-Magic.handleReaction.missingValue = "Missing value to respond.";
-Magic.handleReaction.executeError = "Error responding to reaction: %1";
+    system: {
+        newVersionDetected: "🔔 You are using version %1, the latest version is %2.",
+        updateSuccess: "✅ Bot updated successfully to version %1.",
+        databaseConnected: "💾 Connected to the database successfully!",
+        databaseFailed: "❌ Failed to connect to the database: %1"
+    },
 
-Magic.handleEvent = {};
-Magic.handleEvent.executeEvent = "Event executed: %2 at thread %3 | Processing: %4ms";
-Magic.handleEvent.eventError = "Error executing event %1: %2";
+    listen: {
+        startLoadEnvironment: "⏳ Loading environment variables...",
+        loadedEnvironmentThread: "✅ Thread environment loaded successfully.",
+        loadedEnvironmentUser: "✅ User environment loaded successfully.",
+        failLoadEnvironment: "❌ Failed to load environment variables: %1"
+    },
 
-// Updater
-Magic.updater = {};
-Magic.updater.latestVersion = "You are using the latest version.";
-Magic.updater.cantFindVersion = "Undefined version (%1). Check your package.json file.";
-Magic.updater.newVersions = "%1 new version(s) available. Updating now...";
-Magic.updater.updateSuccess = "Bot updated successfully to the latest version.";
-Magic.updater.configChanged = "%1 configuration has changed. Please verify config.json.";
-Magic.updater.installingPackages = "Installing dependencies for the bot...";
-Magic.updater.installSuccess = "Dependencies installed successfully. Restart the bot to apply.";
-Magic.updater.backupSuccess = "Backup of changed files completed. See the %1 folder.";
-Magic.updater.restartToApply = "Restart the bot to apply the new version.";
-Magic.updater.skipFile = "%1 file has a new version but was skipped during update due to comment: %2";
+    handleCommand: {
+        executeCommand: "📝 [ %1 ] Command used: %2 by user: %3 at thread: %4 | Args: %5 | ⏱️ Processing time: %6ms"
+    }
+};
